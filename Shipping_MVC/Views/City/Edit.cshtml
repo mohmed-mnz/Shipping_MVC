@@ -1,0 +1,61 @@
+﻿@model CityAddVM
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_dashboardLayout";
+    ViewData["Title"] = "Cities";
+    SelectList governroates = new SelectList(Model.governroates, "Id", "Name");
+}
+
+<div class="section-padding data-form">
+    <div class="container">
+        <div class="head-title">
+            <p>City Data</p>
+            <h3>Always Good To Make Our Business Bigger</h3>
+        </div>
+        <form method="post">
+            <div class="row my-5 align-items-start justify-content-center gy-5">
+                <div class="col-md-6">
+                    <label asp-for="name">
+                    </label>
+                    <input class="w-100 rounded-3 p-2" asp-for="name" />
+                    <span asp-validation-for="name" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="governorate_Id">
+                    </label>
+                    <select class="w-100 rounded-3 p-2" asp-for="governorate_Id" asp-items="governroates">
+                        <option value="0">--Select Governroate--</option>
+                    </select>
+                    <span asp-validation-for="governorate_Id" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="charge_Regular">
+                    </label>
+                    <input class="w-100 rounded-3 p-2" asp-for="charge_Regular" />
+                    <span asp-validation-for="charge_Regular" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="charge_24Hour">
+                    </label>
+                    <input class="w-100 rounded-3 p-2" asp-for="charge_24Hour" />
+                    <span asp-validation-for="charge_24Hour" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="charge_15Days">
+                    </label>
+                    <input class="w-100 rounded-3 p-2" asp-for="charge_15Days" />
+                    <span asp-validation-for="charge_15Days" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="charge_89Days">
+                    </label>
+                    <input class="w-100 rounded-3 p-2" asp-for="charge_89Days" />
+                    <span asp-validation-for="charge_89Days" class="text-danger"></span>
+                </div>
+            </div>
+            <input type="submit" class="button" value="Update" />
+        </form>
+    </div>
+</div>

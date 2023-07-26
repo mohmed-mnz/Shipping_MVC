@@ -1,0 +1,122 @@
+﻿<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="">
+            <img src="~/assets/logo.png"
+                 class="img-fluid me-2 w-50 d-block"
+                 alt="Logo" />
+            <h5 class="display-6 fw-bolder">Fas<span>T</span>rans</h5>
+        </a>
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="/home/index">Home</a>
+                </li>
+                @if(User.Identity.IsAuthenticated == false)
+                    {
+                <a href="login/login" class="button">
+                    Login<i class="fa-solid fa-right-to-bracket ms-1"></i>
+                </a>
+                    } else {
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        @User.Identity.Name
+                    </a>
+                    <ul class="dropdown-menu">
+                        @if(User.IsInRole("Admin") == true) {
+                        <div>
+                            <li>
+                                <a class="dropdown-item nav-link bg-transparent"
+                                   href="/order/all"
+                                   >Dashboard</a>
+                            </li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li>
+                                <a class="dropdown-item nav-link bg-transparent"
+                                       href="/employees/GetAllEmployee">Employees</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item nav-link bg-transparent"
+                                       href="/customer/getall">Customers</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item nav-link bg-transparent"
+                                       href="/Delivery/GetAllDelivries">Deliveries</a>
+                            </li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li>
+                                <a class="dropdown-item nav-link bg-transparent"
+                                       href="/branch/all">Branches</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item nav-link bg-transparent"
+                                       href="/Governroate/All">Governroates</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item nav-link bg-transparent"
+                                       href="/city/all">Cities</a>
+                            </li>
+                            <li><hr class="dropdown-divider" /></li>
+                        </div>
+                        }
+                            @if (User.IsInRole("Employee") == true)
+                            {
+                        <div>
+                            <li>
+                                <a class="dropdown-item nav-link bg-transparent"
+                           href="/order/orderemployee">Orders</a>
+                            </li>
+                            <li><hr class="dropdown-divider" /></li>
+                        </div>
+                            }
+                            @if (User.IsInRole("Customer") == true)
+                            {
+                                <div>
+                                    <li>
+                                        <a class="dropdown-item nav-link bg-transparent"
+                           href="/order/ordercustomer">Dashboard</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li>
+                                        <a class="dropdown-item nav-link bg-transparent"
+                                        href="/order/AddOrder"
+                                        >Add Order</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                </div>
+                            }
+                            @if (User.IsInRole("Delivery") == true)
+                            {
+                            <div>
+                            <li>
+                                <a class="dropdown-item nav-link bg-transparent"
+                           href="/order/orderdelivery">Orders</a>
+                            </li>
+                            <li><hr class="dropdown-divider" /></li>
+                        </div>
+                            }
+                        <li>
+                            <a class="dropdown-item" asp-action="logout" asp-controller="login">
+                                Logout<i class="fa-solid fa-right-from-bracket ms-1"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,104 @@
+﻿@model List<CustomerViewModel>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_dashboardLayout";
+    ViewData["Title"] = "Customers";
+}
+
+<div class="section-padding show-data">
+    <div class="container">
+        <div class="head-title">
+            <p>Our Customer</p>
+            <h3>Wherever You Are, We Are</h3>
+        </div>
+        <div class="data-table overflow-hidden rounded-3 mt-5 bg-white">
+            <div class="table-header p-2 bg-light d-flex flex-wrap justify-content-center justify-content-lg-between align-items-center gap-3">
+                <h3>Customers</h3>
+                <div>
+                    <a href="/Customer/AddCustomer" class="button">
+                        New Customer<i class="fa-solid fa-plus ms-3"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="px-2 py-3 table-responsive">
+                <div class="search-table my-4 d-flex flex-wrap justify-content-center align-items-center gap-3">
+                    <form action="/Customer/Search">
+                        <input class="search-name rounded-3 p-2 bg-light"
+                               type="text"
+                               name="name"
+                               placeholder="Enter Name" />
+                        <button class="button ms-3 ms-md-0" type="submit">
+                            Search
+                        </button>
+                        <a class="button" href="/customer/getall">Reset</a>
+
+                    </form>
+                </div>
+                <table class="table table-hover table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Serial</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Branch</th>
+                            <th>Store Name</th>
+                            <th>Special Disscount</th>
+                            <th>Refused Percentage</th>
+                            <th scope="col">Available</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th scope="row">@item.id</th>
+                                <td>@item.name</td>
+                                <td>@item.email</td>
+
+                                <td>@item.phone</td>
+                                <td>@item.branch</td>
+                                <td>@item.store_Name</td>
+                                <td>@item.special_Discount_Perc</td>
+                                <td>@item.refused_Order_Perc</td>
+
+                                <td>
+                                    <label class="button-available" for="@item.id">
+                                        <input (change)="softDelete(@item)"
+                                               id="@item.id"
+                                               checked="@item.available"
+                                               type="checkbox" onchange="SoftDelete(@(item.id))" />
+                                        <span class="slider"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <a class="edit-btn"
+                                       href="/Customer/EditCustomer/@item.id">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    @*<partial name="_ValidationScriptsPartial" />*@
+    <script>
+        function SoftDelete(id) {
+            $.ajax({
+                url: `/Customer/SoftDelete/${id}`,
+                success: function (result) {
+                }
+            });
+        }
+    </script>
+}

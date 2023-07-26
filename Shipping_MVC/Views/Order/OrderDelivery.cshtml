@@ -1,0 +1,104 @@
+﻿@model List<OrderVM>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_dashboardLayout";
+    ViewData["Title"] = "Orders";
+}
+
+<div class="section-padding show-data">
+    <div class="container">
+        <div class="head-title">
+            <p>Orders</p>
+            <h3>Wherever You Are, We Are</h3>
+        </div>
+        <div class="data-table overflow-hidden rounded-3 mt-5 bg-white">
+            <div class="table-header p-2 bg-light d-flex flex-wrap justify-content-center justify-content-lg-between align-items-center gap-3">
+                <h3>Orders</h3>
+            </div>
+            <div class="px-2 py-3 table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Serial</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Client</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Total Weight</th>
+                            <th scope="col">Total Cost</th>
+                            <th scope="col">Delivery</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Change Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th scope="row">@item.id</th>
+                                <td>@item.order_Date</td>
+                                <td>
+                                    @item.client_Name<br />
+                                    @item.client_Phone
+                                </td>
+                                <td>
+                                    @item.branch_Name<br />@item.governorate_Name
+                                    <br />
+                                    @item.city_Name<br />
+                                    @item.client_Village
+                                </td>
+                                <td>@item.total_Weight</td>
+                                <td>@item.total_Price</td>
+                                
+                                <td>
+                                    @item.delivery_Name<br />
+                                    @item.delivery_Phone
+                                </td>
+                                <td>@item.status</td>
+                                <td>
+                                    <select class="p-2 rounded-3"
+                                            name="status"
+                                            id="statusDelivery @item.id"
+                                            onchange="updateStatus(@item.id)">
+                                        <option value="" selected disabled>Change Status</option>
+                                        <option value="Deliverd">Deliverd</option>
+                                        <option value="Can’t Be Reached">Can’t Be Reached</option>
+                                        <option value="Postponed">Postponed</option>
+                                        <option value="Partially Delivered">
+                                            Partially Delivered
+                                        </option>
+                                        <option value="Client Canseled">Client Canseled</option>
+                                        <option value="Rejected With Payment">
+                                            Rejected With Payment
+                                        </option>
+                                        <option value="Rejected With Percentage">
+                                            Rejected With Percentage
+                                        </option>
+                                        <option value="Regected Without Payment">
+                                            Regected Without Payment
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @*<partial name="_ValidationScriptsPartial" />*@
+    <script>
+        function updateStatus(id) {
+            var status = document.getElementById(`statusDelivery ${id}`).value;
+            $.ajax({
+                url: `/order/UpdateStatus/${id}?status=${status}`,
+                success: function (result) {
+                }
+            });
+        }
+    </script>
+}

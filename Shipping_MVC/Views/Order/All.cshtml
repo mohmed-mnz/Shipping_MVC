@@ -1,0 +1,114 @@
+﻿@model List<OrderVM>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_dashboardLayout";
+    ViewData["Title"] = "Orders";
+}
+
+<div class="section-padding show-data">
+    <div class="container">
+        <div class="head-title">
+            <p>Orders Report</p>
+            <h3>Wherever You Are, We Are</h3>
+        </div>
+        <div class="data-table overflow-hidden rounded-3 mt-5 bg-white">
+            <div class="table-header p-2 bg-light d-flex flex-wrap justify-content-center justify-content-lg-between align-items-center gap-3">
+                <h3>Orders</h3>
+            </div>
+            <div class="px-2 py-3 table-responsive">
+                <div class="search-table my-4">
+                    <form action="/order/report">
+                        <div class="row align-items-center justify-content-center gy-4">
+                            <div class="col-6 col-lg-3">
+                        <select class="rounded-3 p-2" name="status">
+                            <option value="" selected disabled>Select Status</option>
+                            <option value="New">New</option>
+                            <option value="Waiting">Waiting</option>
+                            <option value="Assigned To Delivery">Assigned To Delivery</option>
+                            <option value="Deliverd">Deliverd</option>
+                            <option value="Can’t Be Reached">Can’t Be Reached</option>
+                            <option value="Postponed">Postponed</option>
+                            <option value="Partially Delivered">Partially Delivered</option>
+                            <option value="Client Canseled">Client Canseled</option>
+                            <option value="Rejected With Payment">
+                                Rejected With Payment
+                            </option>
+                            <option value="Rejected With Percentage">
+                                Rejected With Percentage
+                            </option>
+                            <option value="Regected Without Payment">
+                                Regected Without Payment
+                            </option>
+                        </select>
+
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <input class="search-name rounded-3 p-2 bg-light d-block"
+                                       type="datetime-local"
+                                       name="startDate" />
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <input class="search-name rounded-3 p-2 bg-light d-block"
+                                       type="datetime-local"
+                                       name="endDate" />
+                            </div>
+                           <div class="col-6 col-lg-1">
+                                <button class="button ms-2 ms-md-0" type="submit">
+                                    Search
+                                </button>
+                           </div>
+                           <div class="col-6 col-lg-1">
+                                <a class="button d-block" asp-action="All" asp-controller="order">Reset</a>
+                           </div>
+                        </div>
+                    </form>
+                </div>
+                <table class="table table-hover table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Serial</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Client</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Total Weight</th>
+                            <th scope="col">Total Cost</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Delivery</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th scope="row">@item.id</th>
+                                <td>@item.order_Date</td>
+                                <td>
+                                    @item.customer_Name <br />
+                                    @item.customer_Phone
+                                </td>
+                                <td> @item.client_Name<br />
+                                     @item.client_Phone
+                                </td>
+                                <td>
+                                   @item.branch_Name<br />@item.governorate_Name
+                                    <br />
+                                  @item.city_Name<br />
+                                    @item.client_Village
+                                </td>
+                                <td>@item.total_Weight</td>
+                                <td>@item.total_Price</td>
+                                <td>@item.status</td>
+                                <td>@item.delivery_Name<br />
+                                    @item.delivery_Phone
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

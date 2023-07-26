@@ -1,0 +1,149 @@
+﻿@model AddOrderCustomerViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_dashboardLayout";
+    ViewData["Title"] = "Orders";
+    SelectList BranchItems =
+        new SelectList(Model.branches_List, "Id", "Name");
+
+    SelectList GovItems =
+        new SelectList(Model.governorates_List, "Id", "Name");
+
+    SelectList CityItems =
+        new SelectList(Model.cities_List, "Id", "Name");
+}
+
+<div class="section-padding data-form">
+    <div class="container">
+        <div class="head-title">
+            <p>Order Data</p>
+            <h3>Always Good To Make Our Business Bigger</h3>
+        </div>
+        <form method="post">
+            <div class="row my-5 align-items-start justify-content-center gy-5">
+                <div class="col-md-6">
+                    <label> Client Name</label><br>
+                    <input type="text" name="client_Name" id="client_Name" value="@Model?.client_Name" class="w-100 rounded-3 p-2" />
+                </div>
+                <div class="col-md-6">
+                    <label>client Email</label><br>
+                    <input type="text" name="client_Email" id="client_Email" value="@Model?.client_Email" class="w-100 rounded-3 p-2" />
+                </div>
+                <div class="col-md-6">
+                    <label>client Phone</label><br>
+                    <input type="text" name="client_Phone" id="client_Phone" value="@Model?.client_Phone" class="w-100 rounded-3 p-2" />
+                </div>
+                <div class="col-md-6">
+                    <label>client Village</label><br>
+                    <input type="text" name="client_Village" id="client_Village" value="@Model?.client_Village" class="w-100 rounded-3 p-2" />
+                </div>
+                <div class="col-md-6">
+                    <label>order Type</label><br>
+                    <select name="order_Type" id="order_Type" class="w-100 rounded-3 p-2">
+                        <option value="" disabled selected>Select Order Type</option>
+                        <option value="online">Online</option>
+                        <option value="On_Branch">On Branch</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label>charge Type</label><br>
+                    <select onchange="CalculatePrice()" (change)="getChargePrice(charge.value)" name="charge_Type" id="charge_Type" class="w-100 rounded-3 p-2">
+                        <option value="" disabled selected>Select Charge Type</option>
+                        <option value="charge_Regular">Regular Charge</option>
+                        <option value="Charge_24Hour">24hours Charge</option>
+                        <option value="charge_15Days">15Days Charge</option>
+                        <option value="charge_89Days">89Days Charge</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label>payment Type</label><br>
+                    <select name="payment_Type" id="payment_Type" class="w-100 rounded-3 p-2">
+                        <option value="" disabled selected>Select Payment Type</option>
+                        <option value="on_delivery">On Delivery</option>
+                        <option value="advanced_payment">Advanced Payment</option>
+                        <option value="exchange">Exchange</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="branch_Id">Branch</label>
+                    <select class="w-100 rounded-3 p-2" id="branch_Id" asp-for="branch_Id" asp-items="BranchItems" onChange="GetData1()">
+                        <option value="0">--Select Branch--</option>
+                    </select>
+                    <span asp-validation-for="branch_Id" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="governorate_Id">Governorate</label>
+                    <select class="w-100 rounded-3 p-2" id="governorate_Id" asp-for="governorate_Id" asp-items="GovItems" onChange="GetData2()">
+                        <option value="0">--Select Gov--</option>
+                    </select>
+                    <span asp-validation-for="governorate_Id" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="city_Id">City</label>
+                    <select class="w-100 rounded-3 p-2" id="city_Id" asp-for="city_Id" asp-items="CityItems">
+                        <option value="0">--Select City--</option>
+                    </select>
+                    <span asp-validation-for="city_Id" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label>Total Weight</label><br>
+                    <input onInput="CalculatePrice()" type="text" name="total_Weight" id="total_Weight" value="@Model.total_Weight" class="w-100 rounded-3 p-2" />
+                </div>
+                <div class="col-md-6">
+                    <label>Total Price</label><br>
+                    <input type="text" name="total_Price" id="total_Price" value="@Model?.total_Price" class="w-100 rounded-3 p-2" />
+                </div>
+            </div>
+            <input type="submit" class="button" value="Add" />
+        </form>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+
+        function CalculatePrice() {
+            var chargeType = document.getElementById("charge_Type").value;
+            var weight = document.getElementById("total_Weight").value;
+
+            // Perform the price calculation based on the selected charge type
+            var price = 0;
+
+            switch (chargeType) {
+                case "charge_Regular":
+                    price = 20 * weight;
+                    break;
+
+                case "Charge_24Hour":
+                    price = 30 * weight;
+                    break;
+
+                case "charge_15Days":
+                    price = 40 * weight;
+                    break;
+
+                case "charge_89Days":
+                    price = 50 * weight;
+                    break;
+
+                default:
+                    break;
+
+
+            }
+            document.getElementById("total_Price").value = price;
+
+        }
+
+
+
+
+    </script>
+}

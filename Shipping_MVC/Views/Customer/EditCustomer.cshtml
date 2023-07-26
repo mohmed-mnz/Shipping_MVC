@@ -1,0 +1,77 @@
+﻿@model CustomerAddEditViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_dashboardLayout";
+    ViewData["Title"] = "Customers";
+    SelectList BranchItems =
+        new SelectList(Model.branches_List, "Id", "Name");
+}
+
+<div class="section-padding data-form">
+    <div class="container">
+        <div class="head-title">
+            <p>Customer Data</p>
+            <h3>Always Good To Make Our Business Bigger</h3>
+        </div>
+        <form method="post">
+            <div class="row my-5 align-items-start justify-content-center gy-5">
+                <div class="col-md-6">
+                    <label asp-for="name">
+                    </label>
+                    <input class="w-100 rounded-3 p-2" asp-for="name" />
+                    <span asp-validation-for="name" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="email" class="form-label"></label>
+                    <input asp-for="email" class="w-100 rounded-3 p-2">
+                    <span class="text-danger" asp-validation-for="email"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="phone" class="form-label"></label>
+                    <input asp-for="phone" class="w-100 rounded-3 p-2">
+                    <span class="text-danger" asp-validation-for="phone"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="address" class="form-label"></label>
+                    <input asp-for="address" class="w-100 rounded-3 p-2">
+                    <span class="text-danger" asp-validation-for="address"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="password" class="form-label"></label>
+                    <input asp-for="password" class="w-100 rounded-3 p-2">
+                    <span class="text-danger" asp-validation-for="password"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="branch_Id" class="form-label">Branch</label>
+                    <select class="w-100 rounded-3 p-2" asp-for="branch_Id" asp-items="BranchItems">
+                        <option value="0">--Select Branch--</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="store_Name">
+                        Store Name
+                    </label>
+                    <input class="w-100 rounded-3 p-2" asp-for="store_Name" />
+                    <span asp-validation-for="store_Name" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="special_Discount_Perc">
+                        Special Discount
+                    </label>
+                    <input class="w-100 rounded-3 p-2" asp-for="special_Discount_Perc" />
+                    <span asp-validation-for="special_Discount_Perc" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="refused_Order_Perc">
+                        Refused Order
+                    </label>
+                    <input class="w-100 rounded-3 p-2" asp-for="refused_Order_Perc" />
+                    <span asp-validation-for="refused_Order_Perc" class="text-danger"></span>
+                </div>
+            </div>
+            <input type="submit" class="button" value="Update" />
+        </form>
+    </div>
+</div>
